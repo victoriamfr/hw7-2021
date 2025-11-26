@@ -22,7 +22,6 @@ window.addEventListener("load", function() {
 		console.log("Play Video");
 		video.play();
 
-		// ✅ Update the volume display WHEN Play is clicked
 		let slider = document.querySelector("#slider");
 		let volumeSpan = document.querySelector("#volume");
 		if (slider && volumeSpan) {
