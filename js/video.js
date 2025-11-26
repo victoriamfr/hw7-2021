@@ -12,6 +12,12 @@ window.addEventListener("load", function() {
 	console.log("Autoplay is set to", video.autoplay);
 	console.log("Loop is set to", video.loop);
 
+	// 🧹 Make sure volume text starts truly empty (no space)
+	let volumeSpan = document.querySelector("#volume");
+	if (volumeSpan) {
+		volumeSpan.textContent = "";
+	}
+
 	// PLAY
 	document.querySelector("#play").addEventListener("click", function() {
 		console.log("Play Video");
