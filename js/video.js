@@ -1,5 +1,3 @@
-// video.js
-
 var video;
 
 window.addEventListener("load", function() {
@@ -14,21 +12,17 @@ window.addEventListener("load", function() {
 	console.log("Autoplay is set to", video.autoplay);
 	console.log("Loop is set to", video.loop);
 
-	// Set initial volume display (video.volume is 0–1)
-	let volumeSpan = document.querySelector("#volume");
-	let slider = document.querySelector("#slider");
-
-	if (slider && volumeSpan) {
-		// Make sure slider matches the video volume (0–100)
-		slider.value = video.volume * 100;
-		volumeSpan.textContent = slider.value + "%";
-	}
-
 	// PLAY
 	document.querySelector("#play").addEventListener("click", function() {
 		console.log("Play Video");
 		video.play();
-		updateVolumeText();
+
+		// ✅ Update the volume display WHEN Play is clicked
+		let slider = document.querySelector("#slider");
+		let volumeSpan = document.querySelector("#volume");
+		if (slider && volumeSpan) {
+			volumeSpan.textContent = slider.value + "%";
+		}
 	});
 
 	// PAUSE
@@ -76,12 +70,19 @@ window.addEventListener("load", function() {
 		}
 	});
 
-	// VOLUME SLIDER: 0–100 → 0–1
-	slider.addEventListener("input", function() {
-		video.volume = slider.value / 100;
-		console.log("Volume:", video.volume);
-		updateVolumeText();
-	});
+	// VOLUME SLIDER: 0–100 → 0–1, and update text
+	let slider = document.querySelector("#slider");
+	if (slider) {
+		slider.addEventListener("input", function() {
+			video.volume = slider.value / 100;
+			console.log("Volume:", video.volume);
+
+			let volumeSpan = document.querySelector("#volume");
+			if (volumeSpan) {
+				volumeSpan.textContent = slider.value + "%";
+			}
+		});
+	}
 
 	// OLD SCHOOL: add oldSchool class
 	document.querySelector("#vintage").addEventListener("click", function() {
@@ -95,12 +96,3 @@ window.addEventListener("load", function() {
 		console.log("Reverted to original style");
 	});
 });
-
-// helper to keep "Volume is: X%" in sync
-function updateVolumeText() {
-	let volumeSpan = document.querySelector("#volume");
-	let slider = document.querySelector("#slider");
-	if (volumeSpan && slider) {
-		volumeSpan.textContent = slider.value + "%";
-	}
-}
